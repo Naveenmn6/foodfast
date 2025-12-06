@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="text-center">
+  <div class="mb-3">
+    <span class="display-6 text-success">✓</span>
+  </div>
+  <h2 class="mb-3">Order Placed!</h2>
+  <p class="mb-1">Order ID: <strong>#{{ order.id }}</strong></p>
+  <p class="mb-1">Total: <strong>₹{{ '%.2f'|format(order.total_cost) }}</strong></p>
+  <p class="mb-3">Status: <span class="badge bg-success">{{ order.status }}</span></p>
+  <a href="{{ url_for('customer.list_restaurants') }}" class="btn btn-danger">Back to restaurants</a>
+</div>
+{% endblock %}

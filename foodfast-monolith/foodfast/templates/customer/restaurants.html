@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h2 class="mb-1">Restaurants</h2>
+    <p class="text-muted mb-0">Browse and order from nearby places</p>
+  </div>
+  <form class="d-flex" method="get" action="{{ url_for('customer.list_restaurants') }}">
+    <input type="search" name="q" class="form-control form-control-sm me-2" placeholder="Search by name or cuisine" value="{{ q or '' }}">
+    <button class="btn btn-outline-light btn-sm bg-danger" type="submit">Search</button>
+  </form>
+</div>
+
+{% if q %}
+  <p class="text-muted">Showing results for "{{ q }}"</p>
+{% endif %}
+
+{% if restaurants %}
+  <div class="row g-3">
+    {% for r in restaurants %}
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ r.name }}</h5>
+            <p class="card-text mb-1 text-muted">{{ r.cuisine_type }}</p>
+            <p class="card-text"><small class="text-success">⭐ {{ '%.1f'|format(r.rating or 4.0) }} · {{ r.delivery_time_mins }} mins</small></p>
+            <a href="{{ url_for('customer.restaurant_detail', restaurant_id=r.id) }}" class="btn btn-danger btn-sm">View menu</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="alert alert-info">No restaurants available yet.</div>
+{% endif %}
+{% endblock %}
