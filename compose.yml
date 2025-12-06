@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    container_name: foodfast-web
+    ports:
+      - "8000:8000"
+    environment:
+      # Uses SQLite DB inside /data (see Dockerfile)
+      - DATABASE_URL=sqlite:////data/foodfast.db
+      - SECRET_KEY=change-this-secret
+    volumes:
+      - foodfast_data:/data
+    # Restart unless stopped manually
+    restart: unless-stopped
+
+volumes:
+  foodfast_data:
+    driver: local
